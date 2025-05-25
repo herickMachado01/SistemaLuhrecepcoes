@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style/style.css">
+    <title>Login</title>
+</head>
+<body>
+    <div class="Login-container">
+      <div class="topo ">
+         <img class="logo" src="./img/logo.png" alt="">
+         <h1>Sistema Luh Recepções</h1>
+      </div>
+      <div class="container-form">
+        <form action="login" id="loginForm"  method="post">
+          <div class="dados">x'
+            
+              <!-- Campo Usuario -->
+            <div class="usuario">
+              <h1>E-Mail</h1>
+              <input type="email" name="email" id="email" placeholder="Digite seu E-Mail" required>
+            </div>
+
+              <!-- Senha -->
+             <div class="senha">
+              <h1>Senha</h1>
+              <input type="password" name="senha" id="senha" placeholder="Digite sua Senha" required >
+            </div>
+
+              <!-- Esqueceu a Senha -->
+            <div class="esqueceu">
+              <a href=""><h1>Esqueceu sua Senha? Clique aqui</h1></a>
+            </div>
+
+            <button type="submit" >
+                Entrar
+                <div class="arow-wrapper">
+                    <div class="arrow"></div>
+                </div>
+            </button>
+
+          </div>          
+
+        </form>
+      </div>
+    </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./js/script.js"></script>
+</body>
+</html>

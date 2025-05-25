@@ -1,0 +1,176 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.Login-container{
+    background-color: #121212;;
+    margin-top: 100px;
+    margin: 100px auto;
+    max-width: 500px;
+    border-radius: 30px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding-bottom: 20px;
+}
+
+.topo{
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    color: white;
+    
+}
+
+.logo{
+    margin-top: 20px;
+    width: 10%;
+    padding: auto;
+}
+
+
+
+.usuario {
+    margin-left: 80px;
+    align-items: center;
+    color: aliceblue;
+    font-size: 10px;
+    font-weight: 300;
+    
+}
+
+.usuario h1 {
+    color: aliceblue;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.usuario input{
+    margin-top: 10px;
+    width: 300px;
+    border: none;
+    border-bottom: 2px solid #ffffff;
+    background: transparent;
+    outline: none;
+    padding: 8px 4px;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+input:focus{
+ border-bottom: 1px solid #ffffff; /* muda a cor quando selecionado */
+}
+
+.senha {
+    margin-left: 80px;
+    align-items: center;
+    color: aliceblue;
+    font-size: 10px;
+    font-weight: 300;
+    
+}
+
+.senha h1 {
+    margin-top: 10px;
+    color: aliceblue;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.senha input{
+    margin-top: 10px;
+    width: 300px;
+    border: none;
+    border-bottom: 2px solid #ffffff;
+    background: transparent;
+    outline: none;
+    padding: 8px 4px;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+input:focus{
+ border-bottom: 1px solid #ffffff; /* muda a cor quando selecionado */
+}
+
+.esqueceu {
+    margin-left: 80px;
+    align-items: center;
+}
+
+.esqueceu h1{
+    margin-top: 10px;
+    color: rgb(255, 255, 255);
+    font-size: 15px;
+    font-weight: 100;
+}
+
+.esqueceu a{
+    text-decoration: none;
+}
+
+button {
+    margin-top: 10px;
+    margin-left: 80px;
+  --primary-color: #c49345;
+  --secondary-color: #fff;
+  --hover-color: #111;
+  --arrow-width: 10px;
+  --arrow-stroke: 2px;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 20px;
+  color: var(--secondary-color);
+  padding: 1em 1.8em;
+  background: var(--primary-color);
+  display: flex;
+  transition: 0.2s ;
+  align-items: center;
+  gap: 0.6em;
+  font-weight: bold;
+
+}
+
+button .arrow-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button .arrow {
+  margin-top: 1px;
+  width: var(--arrow-width);
+  background: var(--primary-color);
+  height: var(--arrow-stroke);
+  position: relative;
+  transition: 0.2s;
+}
+
+button .arrow::before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  border: solid var(--secondary-color);
+  border-width: 0 var(--arrow-stroke) var(--arrow-stroke) 0;
+  display: inline-block;
+  top: -3px;
+  right: 3px;
+  transition: 0.2s;
+  padding: 3px;
+  transform: rotate(-45deg);
+}
+
+button:hover {
+  background-color: var(--hover-color);
+}
+
+button:hover .arrow {
+  background: var(--secondary-color);
+}
+
+button:hover .arrow:before {
+  right: 0;
+}
