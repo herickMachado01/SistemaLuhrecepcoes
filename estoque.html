@@ -3,12 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style/estoque.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <title>Estoque</title>
 </head>
 <body>
     <div id="header"></div>
+        <div class="container">
+            <div class="box">
+                <div>
+                    <p>Nome do Produto</p>
+                    <input type="text" id="produto">
+                </div>
+                <div>
+                    <p>Quantidade Produto</p>
+                    <input type="number" name="" id="quantidade">
+                </div>
+                <div>
+                    <p>Descrição</p>
+                    <input type="text" id="descricao">
+                </div>
+                <div>
+                    <p>Data</p>
+                    <input type="date" id="data" name="data" required>
+                </div>
+                  <button id="cadastrar">Cadastrar Produto</button>
+            </div>
+        </div>
+        <div id="popup-editar">
+        <div class="popup-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h3>Editar Produto</h3>
+            <input type="text" id="edit-nome" placeholder="Nome">
+            <input type="number" id="edit-quant" placeholder="Quantidade">
+            <input type="text" id="edit-desc" placeholder="Descrição">
+            <input type="date" id="edit-data">
+            <div style="text-align: right;">
+            <button id="confirmar-edicao">Salvar</button>
+            </div>
+            <div id="erropopup" style="margin-top: 10px; color: red;" ></div>
+            <div id="popsalvo" style="margin-top: 10px; color: green"></div>
+        </div>
+        </div>
+        <div id="erro" style="margin-left:280px; color: red; margin-top: 10px; "></div>
+        <div id="CadastroConcluido"  style="margin-left:280px; color: rgb(24, 107, 7); margin-top: 10px;" ></div>
+        <div id="lista-produtos" class="estoque-container" > </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="/js/header.js"></script>
+    <script type="module" src="/js/header.js"></script>
+    <script type="module" src="js/estoque.js"></script>
 </body>
 </html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerenciar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style/festa.css">
+</head>
+<body>
+  <div id="header"></div>
+
+  <div class="botao">
+    <button id="cadastrarFesta">Cadastrar Festa</button>
+  </div>
+
+  <div id="modalFesta" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeModal">&times;</span>
+      <h2>Cadastrar Nova Festa</h2>
+      <form id="formFesta">
+        <label for="nomeFesta">Nome da Festa</label> 
+        <input type="text" id="nomeFesta" required>
+
+        <label for="descricaoFesta">Descrição</label>
+        <textarea id="descricaoFesta" required></textarea>
+
+        <label for="localizacaoFesta">Localização</label>
+        <input type="text" id="localizacaoFesta" required>
+
+        <div id="itensContainer">
+          <div class="item-group">
+            <label>Item a Utilizar</label>
+            <select class="itemSelect" required>
+              <option value="">Carregando...</option>
+            </select>
+
+            <label>Quantidade</label>
+            <input type="number" class="quantidade" min="1" required>
+          </div>
+        </div>
+        
+        <div class="mensagemerro" id="mensagemAlerta" ></div>
+
+
+        <button type="button" id="addItemBtn">+ Adicionar Outro Item</button>
+        <button type="submit">Cadastrar</button>
+      </form>
+    </div>
+  </div>
+  <h2 style="text-align:center; margin-top: 40px;">Festas Cadastradas</h2>
+  <div id="listaFestas" class="lista-festas"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script type="module" src="/js/header.js"></script>
+  <script type="module" src="./js/festa.js"></script>
+</body>
+</html>

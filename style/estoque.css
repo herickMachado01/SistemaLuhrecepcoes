@@ -1,0 +1,167 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+
+
+.container {
+  padding: 20px;
+}
+
+.box {
+  display: flex;
+  gap: 20px; 
+  align-items: flex-start; 
+  justify-content: center;
+}
+
+.box div {
+  display: flex;
+  flex-direction: column;
+}
+.box p {
+  margin: 10px 0 5px;
+  font-weight: 600;
+}
+
+.box input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: border 0.3s;
+}
+
+.box input:focus {
+  border-color: #c49345;
+}
+
+#cadastrar {
+  margin-top: 30px;
+  padding: 12px;
+  width: 15%;
+  background-color: #c49345;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+
+}
+
+#cadastrar:hover {
+  background-color: #c49345;
+}
+
+
+.estoque-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 900px;
+  margin: 40px auto;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.estoque-container > div {
+  background-color: #f9f9f9;
+  border-left: 6px solid #c49345;
+  padding: 20px ;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+
+
+#popup-editar {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+}
+
+#popup-editar .popup-content {
+  background: #ffffff;
+  padding: 25px 30px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease;
+  position: relative;
+  font-family: 'Montserrat', sans-serif;
+}
+
+#popup-editar input,
+#popup-editar textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+#popup-editar button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.2s ease;
+}
+
+#popup-editar button#confirmar-edicao {
+  background-color: #4CAF50;
+  color: white;
+}
+
+#popup-editar button#confirmar-edicao:hover {
+  background-color: #45a049;
+}
+
+#popup-editar button#cancelar-edicao {
+  background-color: #ccc;
+  color: #333;
+}
+
+#popup-editar button#cancelar-edicao:hover {
+  background-color: #bbb;
+}
+
+#popup-editar .close {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  color: #888;
+  font-size: 26px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+#popup-editar .close:hover {
+  color: #000;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

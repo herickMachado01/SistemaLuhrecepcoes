@@ -1,0 +1,226 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.botao {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.botao button {
+    width: 50%;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    background-color: #c49345;
+    border: none;
+    color: white;
+    font-size: 16px;
+}
+
+.botao button:hover {
+    background-color: #c49345;
+}
+
+
+.modal {
+  display: none; 
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.modal.ativo {
+  display: flex;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 30px 35px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 420px;
+  font-family: 'Montserrat', sans-serif;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+  position: relative;
+  animation: fadeIn 0.3s ease;
+  max-height: 90vh;     
+  overflow-y: auto;     
+}
+
+.modal-content h2 {
+  margin-bottom: 20px;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.modal-content label {
+  display: block;
+  margin-top: 15px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.modal-content input,
+.modal-content textarea,
+.modal-content select {
+  width: 80%;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+  transition: border-color 0.2s ease;
+}
+
+.modal-content input:focus,
+.modal-content textarea:focus,
+.modal-content select:focus {
+  border-color: #c49345;
+  outline: none;
+}
+
+.modal-content textarea {
+  resize: none;
+  height: 80px;
+}
+
+.modal-content button[type="submit"] {
+  margin-top: 20px;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 12px;
+  width: 100%;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-content button[type="submit"]:hover {
+  background-color: #c49345;
+}
+
+.close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.close:hover {
+  color: #000;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#addItemBtn {
+  margin-top: 15px;
+  background-color: #28a745;
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#addItemBtn:hover {
+  background-color: #c49345;
+}
+
+.lista-festas {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px;
+  max-width: 900px;
+  margin: 40px auto;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.lista-festas > div {
+  background-color: #f9f9f9;
+  border-left: 6px solid #c49345;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.lista-festas > div h3 {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.lista-festas > div p {
+  margin: 0 0 12px 0;
+  color: #555;
+}
+
+.lista-festas > div ul {
+  margin: 0 0 12px 20px;
+  color: #555;
+}
+
+.lista-festas > div .botoes {
+  display: flex;
+  gap: 10px;
+}
+
+.lista-festas > div button.excluirBtn {
+  background-color: #c49345;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-weight: 500;
+}
+
+.lista-festas > div button.excluirBtn:hover {
+  background-color: #3730a3;
+}
+
+.mensagemerro{
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f44336; /* vermelho */
+    color: white;
+    padding: 15px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+    z-index: 10000;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2); 
+}
