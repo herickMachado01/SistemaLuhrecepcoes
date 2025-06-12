@@ -1,5 +1,7 @@
 import supabaseClient from "./conexao.js";
 
+let festaEditandoId = null;
+
 const modal = document.getElementById("modalFesta");
 const bnt = document.getElementById("cadastrarFesta");
 const spn = document.getElementById("closeModal");
@@ -19,162 +21,207 @@ window.onclick = function (event) {
   }
 };
 
-async function carregarItensEstoque() {
-  const { data, error } = await supabaseClient.from("estoque").select("id, nome");
+    async function carregarItensEstoque(selectElement = null) {
+      const { data, error } = await supabaseClient.from("estoque").select("id, nome");
 
-  if (error) {
-    console.error("Erro ao carregar itens:", error);
-    return;
-  }
+      if (error) {
+        console.error("Erro ao carregar itens:", error);
+        return;
+      }
 
-  document.querySelectorAll(".itemSelect").forEach((select) => {
-    select.innerHTML = "";
-    data.forEach((item) => {
-      const option = document.createElement("option");
-      option.value = item.id;
-      option.textContent = item.nome;
-      select.appendChild(option);
-    });
-  });
-}
+      const todosSelects = document.querySelectorAll(".itemSelect");
+      const idsSelecionados = new Set();
 
-document.getElementById("addItemBtn").addEventListener("click", () => {
-  const container = document.getElementById("itensContainer");
+      todosSelects.forEach((select) => {
+        if (select !== selectElement) {
+          idsSelecionados.add(select.value);
+        }
+      });
 
-  const div = document.createElement("div");
-  div.className = "item-group";
-  div.innerHTML = `
+      const targets = selectElement ? [selectElement] : todosSelects;
+
+      targets.forEach((select) => {
+        select.innerHTML = "";
+        const optionVazia = document.createElement("option");
+        optionVazia.disabled = true;
+        optionVazia.selected = true;
+        optionVazia.textContent = "Selecione um item...";
+        select.appendChild(optionVazia);
+
+        data.forEach((item) => {
+          if (!idsSelecionados.has(String(item.id)) || select.value == item.id) {
+            const option = document.createElement("option");
+            option.value = item.id;
+            option.textContent = item.nome;
+            select.appendChild(option);
+          }
+        });
+      });
+    }
+
+
+    document.getElementById("addItemBtn").addEventListener("click", async () => {
+      const container = document.getElementById("itensContainer");
+
+      const { data: estoque } = await supabaseClient.from("estoque").select("id, nome");
+      const todosSelects = document.querySelectorAll(".itemSelect");
+      const idsSelecionados = new Set();
+
+      todosSelects.forEach((select) => {
+        idsSelecionados.add(select.value);
+      });
+
+      const itensRestantes = estoque.filter(item => !idsSelecionados.has(String(item.id)));
+
+      if (itensRestantes.length === 0) {
+        alert("Todos os itens do estoque já foram adicionados.");
+        return;
+      }
+
+      const div = document.createElement("div");
+      div.className = "item-group";
+      div.innerHTML = `
         <label>Item a Utilizar</label>
         <select class="itemSelect" required></select>
         <label>Quantidade</label>
         <input type="number" class="quantidade" min="1" required>
-        <button type="button" class="removerItemBtn" style="
-            margin-top: 10px;
-            background-color: #c82333;
-            border: none;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-        ">Remover</button>
-    `;
-  div.querySelector(".removerItemBtn").addEventListener("click", () => {
-    div.remove();
-  });
+        <button type="button" class="removerItemBtn" style="margin-top: 10px; background-color: #c82333; border: none; color: white; padding: 8px 12px; border-radius: 6px; font-weight: bold; cursor: pointer;">Remover</button>
+      `;
 
-  container.appendChild(div);
-  carregarItensEstoque();
-});
+      div.querySelector(".removerItemBtn").addEventListener("click", () => {
+        div.remove();
+        atualizarTodosSelects(); // recarrega os selects após remoção
+      });
 
-document.getElementById("formFesta").addEventListener("submit", async (e) => {
-  e.preventDefault();
+      container.appendChild(div);
 
-  const nome = document.getElementById("nomeFesta").value.trim();
-  const descricao = document.getElementById("descricaoFesta").value.trim();
-  const localizacao = document.getElementById("localizacaoFesta").value.trim();
+      const novoSelect = div.querySelector(".itemSelect");
+      await carregarItensEstoque(novoSelect);
+    });
 
-  if (!nome || !descricao || !localizacao) {
-    alert("Preencha todos os campos da festa.");
-    return;
-  }
 
-  const itemGroups = document.querySelectorAll(".item-group");
-  if (itemGroups.length === 0) {
-    alert("Adicione pelo menos um item.");
-    return;
-  }
+  document.getElementById("formFesta").addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-  const itensSelecionados = [];
+    const nome = document.getElementById("nomeFesta").value.trim();
+    const descricao = document.getElementById("descricaoFesta").value.trim();
+    const localizacao = document.getElementById("localizacaoFesta").value.trim();
 
-  for (const grupo of itemGroups) {
-    const select = grupo.querySelector(".itemSelect");
-    const inputQtd = grupo.querySelector(".quantidade");
-
-    const item_id = select.value;
-    const quantidade = parseInt(inputQtd.value, 10);
-
-    if (!item_id) {
-      alert("Selecione um item.");
-      return;
-    }
-    if (!quantidade || quantidade <= 0) {
-      alert("Informe uma quantidade válida.");
+    if (!nome || !descricao || !localizacao) {
+      alert("Preencha todos os campos da festa.");
       return;
     }
 
-    // Verificar estoque
-    const { data, error } = await supabaseClient
-      .from("estoque")
-      .select("nome, quantidade")
-      .eq("id", item_id)
-      .single();
+    const itemGroups = document.querySelectorAll(".item-group");
+    if (itemGroups.length === 0) {
+      alert("Adicione pelo menos um item.");
+      return;
+    }
 
-      function mostrarAlerta(mensagem) {
-        const alerta = document.getElementById("mensagemAlerta");
-        alerta.textContent = mensagem;
-        alerta.style.display = "block";
+    const itensSelecionados = [];
 
-        // Esconde depois de 3 segundos
-        setTimeout(() => {
-          alerta.style.display = "none";
-        }, 3000);
-      }
-      
-      if (quantidade > data.quantidade) {
-        mostrarAlerta(`Estoque insuficiente para o item ${data.nome}. Disponível: ${data.quantidade}`);
+    for (const grupo of itemGroups) {
+      const select = grupo.querySelector(".itemSelect");
+      const inputQtd = grupo.querySelector(".quantidade");
+
+      const item_id = select.value;
+      const quantidade = parseInt(inputQtd.value, 10);
+
+      if (!item_id || !quantidade || quantidade <= 0) {
+        alert("Preencha os itens corretamente.");
         return;
       }
 
+      const { data, error } = await supabaseClient
+        .from("estoque")
+        .select("nome, quantidade")
+        .eq("id", item_id)
+        .single();
 
-    itensSelecionados.push({ item_id, quantidade });
-  }
+      if (quantidade > data.quantidade) {
+        const alerta = document.getElementById("mensagemAlerta");
+        alerta.textContent = `Estoque insuficiente para o item ${data.nome}. Disponível: ${data.quantidade}`;
+        alerta.style.display = "block";
+        setTimeout(() => alerta.style.display = "none", 3000);
+        return;
+      }
 
-  const { data: festaData, error: festaErro } = await supabaseClient
-    .from("festa")
-    .insert([{ nome, descricao, localizacao }])
-    .select()
-    .single();
-
-  if (festaErro) {
-    alert("Erro ao cadastrar festa.");
-    return;
-  }
-
-  const festaId = festaData.id;
-
-  for (const item of itensSelecionados) {
-    const { error: erroInsercao } = await supabaseClient
-    .from("itens_festa")
-    .insert([{ festa_id: festaId, item_id: item.item_id, quantidade: item.quantidade }]);
-
-    if (erroInsercao) {
-    console.error("Erro ao inserir em itens_festa:", erroInsercao);
-    alert("Erro ao salvar itens da festa. Verifique se todos os campos estão corretos.");
-    return;
+      itensSelecionados.push({ item_id, quantidade });
     }
 
-    const { data: estoqueAtual, error: errEstoque } = await supabaseClient
-      .from("estoque")
-      .select("quantidade")
-      .eq("id", item.item_id)
-      .single();
+    let festaId;
 
-    if (errEstoque || !estoqueAtual) {
-      alert("Erro ao atualizar estoque do item " + item.item_id);
-      return;
+    if (festaEditandoId) {
+      const { error: erroUpdate } = await supabaseClient
+        .from("festa")
+        .update({ nome, descricao, localizacao })
+        .eq("id", festaEditandoId);
+
+      if (erroUpdate) {
+        alert("Erro ao atualizar festa.");
+        return;
+      }
+
+      const { data: itensAntigos } = await supabaseClient
+        .from("itens_festa")
+        .select("item_id, quantidade")
+        .eq("festa_id", festaEditandoId);
+
+      for (const item of itensAntigos || []) {
+        const { data: estoqueAtual } = await supabaseClient
+          .from("estoque")
+          .select("quantidade")
+          .eq("id", item.item_id)
+          .single();
+
+        const novaQtd = estoqueAtual.quantidade + item.quantidade;
+
+        await supabaseClient
+          .from("estoque")
+          .update({ quantidade: novaQtd })
+          .eq("id", item.item_id);
+      }
+
+      await supabaseClient.from("itens_festa").delete().eq("festa_id", festaEditandoId);
+
+      festaId = festaEditandoId;
+      festaEditandoId = null;
+    } else {
+      const { data: festaData, error: festaErro } = await supabaseClient
+        .from("festa")
+        .insert([{ nome, descricao, localizacao }])
+        .select()
+        .single();
+
+      if (festaErro) {
+        alert("Erro ao cadastrar festa.");
+        return;
+      }
+
+      festaId = festaData.id;
     }
 
-    const novaQtd = estoqueAtual.quantidade - item.quantidade;
+    for (const item of itensSelecionados) {
+      await supabaseClient
+        .from("itens_festa")
+        .insert([{ festa_id: festaId, item_id: item.item_id, quantidade: item.quantidade }]);
 
-    await supabaseClient
-      .from("estoque")
-      .update({ quantidade: novaQtd })
-      .eq("id", item.item_id);
-  }
-  
-  window.location.reload();
-});
+      const { data: estoqueAtual } = await supabaseClient
+        .from("estoque")
+        .select("quantidade")
+        .eq("id", item.item_id)
+        .single();
+
+      const novaQtd = estoqueAtual.quantidade - item.quantidade;
+
+      await supabaseClient
+        .from("estoque")
+        .update({ quantidade: novaQtd })
+        .eq("id", item.item_id);
+    }
+
+    window.location.reload();
+  });
 
 
 async function carregarFestas() {
@@ -208,7 +255,60 @@ async function carregarFestas() {
       <hr>
     `;
     container.appendChild(div);
-  }
+  }   
+
+
+  document.querySelectorAll(".editarBtn").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const festaId = btn.getAttribute("data-id");
+      festaEditandoId = festaId;
+
+      const { data: festa } = await supabaseClient
+        .from("festa")
+        .select("*")
+        .eq("id", festaId)
+        .single();
+
+      const { data: itensUsados } = await supabaseClient
+        .from("itens_festa")
+        .select("item_id, quantidade")
+        .eq("festa_id", festaId);
+
+      document.getElementById("nomeFesta").value = festa.nome;
+      document.getElementById("descricaoFesta").value = festa.descricao;
+      document.getElementById("localizacaoFesta").value = festa.localizacao;
+
+      const container = document.getElementById("itensContainer");
+      container.innerHTML = "";
+
+      for (const item of itensUsados) {
+        const div = document.createElement("div");
+        div.className = "item-group";
+        div.innerHTML = `
+          <label>Item a Utilizar</label>
+          <select class="itemSelect" required></select>
+          <label>Quantidade</label>
+          <input type="number" class="quantidade" min="1" required value="${item.quantidade}">
+          <button type="button" class="removerItemBtn" style="margin-top: 10px; background-color: #c82333; border: none; color: white; padding: 8px 12px; border-radius: 6px; font-weight: bold; cursor: pointer;">Remover</button>
+        `;
+
+        div.querySelector(".removerItemBtn").addEventListener("click", () => {
+          div.remove();
+        });
+
+        container.appendChild(div);
+      }
+
+      modal.style.display = "flex";
+      await carregarItensEstoque();
+
+      const selects = container.querySelectorAll(".itemSelect");
+      itensUsados.forEach((item, index) => {
+        selects[index].value = item.item_id;
+      });
+    });
+  });
+
   
   document.querySelectorAll(".excluirBtn").forEach((btn) => {
     btn.addEventListener("click", async () => {

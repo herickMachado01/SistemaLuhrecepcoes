@@ -25,12 +25,22 @@ cadastrar.addEventListener('click', async () => {
 
        Carregardados()
 
-        if (error) {
-        console.error("Erro ao cadastrar:", error)
-        alert("Erro ao cadastrar produto.")
+      function mostrarMensagem(mensagem, cor = "#4CAF50") { 
+      const alerta = document.getElementById("CadastroConcluido");
+      alerta.textContent = mensagem;
+      alerta.style.display = "block";
+
+      setTimeout(() => {
+        alerta.style.display = "none";
+      }, 3000);
+    }
+
+    
+    if (error) {
+      console.error("Erro ao cadastrar:", error);
+      mostrarMensagem("Erro ao cadastrar produto.", "#f44336"); 
     } else {
-        const concluido = document.getElementById("CadastroConcluido")
-        concluido.textContent = "Cadastramento Concluido"
+      mostrarMensagem("Cadastro concluído com sucesso!");
     }
     
 })
@@ -101,7 +111,11 @@ window.excluirItem = async function(id) {
     .from('estoque')
     .delete()
     .eq('id', id);
+
+    Carregardados(); 
 }
+
+
 
 let idParaEditar = null
 
