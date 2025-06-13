@@ -74,7 +74,7 @@ window.onclick = function (event) {
       const itensRestantes = estoque.filter(item => !idsSelecionados.has(String(item.id)));
 
       if (itensRestantes.length === 0) {
-        alert("Todos os itens do estoque já foram adicionados.");
+        console.log("Todos os itens do estoque já foram adicionados.")
         return;
       }
 
@@ -108,13 +108,13 @@ window.onclick = function (event) {
     const localizacao = document.getElementById("localizacaoFesta").value.trim();
 
     if (!nome || !descricao || !localizacao) {
-      alert("Preencha todos os campos da festa.");
+      console.log("Preencha todos os campos da festa.")
       return;
     }
 
     const itemGroups = document.querySelectorAll(".item-group");
     if (itemGroups.length === 0) {
-      alert("Adicione pelo menos um item.");
+      console.log("Adicione pelo menos um item.")
       return;
     }
 
@@ -128,7 +128,7 @@ window.onclick = function (event) {
       const quantidade = parseInt(inputQtd.value, 10);
 
       if (!item_id || !quantidade || quantidade <= 0) {
-        alert("Preencha os itens corretamente.");
+       console.log("Preencha os itens corretamente.")
         return;
       }
 
@@ -158,7 +158,7 @@ window.onclick = function (event) {
         .eq("id", festaEditandoId);
 
       if (erroUpdate) {
-        alert("Erro ao atualizar festa.");
+        console.log("erro")
         return;
       }
 
@@ -194,7 +194,6 @@ window.onclick = function (event) {
         .single();
 
       if (festaErro) {
-        alert("Erro ao cadastrar festa.");
         return;
       }
 

@@ -48,6 +48,14 @@
         <div id="erro" style="margin-left:280px; color: red; margin-top: 10px; "></div>
         <div id="CadastroConcluido"  style="margin-left:280px; color: rgb(24, 107, 7); margin-top: 10px;" ></div>
         <div id="lista-produtos" class="estoque-container" > </div>
+        <div id="confirmModal" style="display:none;" class="modal">
+        <div class="modal-content">
+            <p>Deseja realmente excluir este item?</p>
+            <button id="confirmYes">Sim</button>
+            <button id="confirmNo">Cancelar</button>
+        </div>
+        </div>
+        
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script type="module" src="/js/header.js"></script>

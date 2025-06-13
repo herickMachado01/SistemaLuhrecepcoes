@@ -226,3 +226,21 @@
     z-index: 10000;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2); 
 }
+
+.lista-equipes > div button.pdfBtn,
+.lista-festas > div button.pdfBtn {
+    background-color: #c49345;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+.lista-equipes > div button.pdfBtn:hover,
+.lista-festas > div button.pdfBtn:hover {
+    background-color: #000;
+}

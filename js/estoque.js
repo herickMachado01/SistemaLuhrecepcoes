@@ -51,7 +51,7 @@ async function Carregardados(){
     .select('*')
 
     if(error){
-        alert("erro ao puxar")
+        console.log("erro ao puxar")
         return
     }
 
@@ -106,14 +106,38 @@ container.appendChild(divItem);
     })
 }
 
-window.excluirItem = async function(id) {
+let idParaExcluir = null;
+
+window.excluirItem = function(id) {
+  idParaExcluir = id;
+  document.getElementById('confirmModal').style.display = 'flex';
+};
+
+document.getElementById('confirmYes').onclick = async function() {
   const { error } = await supabaseClient
     .from('estoque')
     .delete()
-    .eq('id', id);
+    .eq('id', idParaExcluir);
 
-    Carregardados(); 
-}
+  if (error) {
+    if (error.code === '23503') {
+      console.log("Este item está sendo utilizado em alguma festa e não pode ser excluído.");
+    } else {
+      console.log("Erro ao excluir item.");
+    }
+    console.error("Erro ao excluir:", error);
+  }
+
+  document.getElementById('confirmModal').style.display = 'none';
+  idParaExcluir = null;
+  Carregardados();
+};
+
+document.getElementById('confirmNo').onclick = function() {
+  document.getElementById('confirmModal').style.display = 'none';
+  idParaExcluir = null;
+};
+
 
 
 
@@ -157,7 +181,7 @@ window.editarItem = function(id , nome , quantidade,descricao,data){
     
     if (error) {
       console.error('Erro ao editar:', error.message);
-      alert("Erro ao salvar.");
+      console.log("Erro ao salvar.");
     } else {
       const Popupsalvar = document.getElementById('popsalvo')
       Popupsalvar.textContent = 'Salvo'

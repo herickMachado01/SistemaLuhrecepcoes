@@ -15,7 +15,6 @@ form.addEventListener('submit', async (event) => {
 
   if(error){
     console.log("Senha ou E-mail Incorreto")
-    alert("Senha ou E-mail incorreto")
   }else{
     window.location.href = 'estoque.html'
   }
