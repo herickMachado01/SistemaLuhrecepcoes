@@ -90,7 +90,7 @@ window.onclick = function (event) {
 
       div.querySelector(".removerItemBtn").addEventListener("click", () => {
         div.remove();
-        atualizarTodosSelects(); // recarrega os selects após remoção
+        atualizarTodosSelects(); 
       });
 
       container.appendChild(div);

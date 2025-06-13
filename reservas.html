@@ -1,14 +1,47 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <title>Equipe</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Equipe</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./style/equipe.css" />
 </head>
 <body>
-    <div id="header"></div>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script type="module" src="/js/header.js"></script>
+  <div id="header"></div>
+
+  <div class="botao">
+    <button id="cadastrarEquipe">Cadastrar Equipe</button>
+  </div>
+
+  <div id="modalEquipe" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeModalEquipe">&times;</span>
+      <h2>Cadastrar Nova Equipe</h2>
+      <form id="formEquipe">
+        <label for="festaSelect">Selecionar Festa</label>
+        <select id="festaSelect" required>
+          <option value="">Carregando...</option>
+        </select>
+
+        <label for="nomeEquipe">Nome da Equipe</label>
+        <input type="text" id="nomeEquipe" required placeholder="Ex: Equipe Buffet">
+
+        <div id="funcionariosContainer">
+        </div>
+
+        <button type="button" id="adicionarFuncionario">+ Adicionar Funcionário</button>
+        <div class="mensagemerro" id="mensagemEquipe"></div>
+        <button type="submit" id="btnSalvarEquipe">Cadastrar Equipe</button>
+      </form>
+    </div>
+  </div>
+
+  <h2 style="text-align:center; margin-top: 40px;">Equipes Cadastradas</h2>
+  <div id="listaEquipes" class="lista-festas"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script type="module" src="/js/header.js"></script>
+  <script type="module" src="./js/equipe.js"></script>
 </body>
 </html>
